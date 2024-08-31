@@ -1,6 +1,6 @@
 let lastId = 0;
 
-function reducer(state = [], dispatch) {
+export default function reducer(state = [], dispatch) {
 
     if(dispatch.type === "bugAdded") {
         return [
