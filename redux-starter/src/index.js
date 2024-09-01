@@ -3,6 +3,10 @@ import store from "./store"
 console.log(store);
 console.log(store.getState());
 
+const unsubscribe = store.subscribe(() => {
+    console.log("Store Changed!", store.getState());
+    
+})
 
 store.dispatch({
     type: "bugAdded",
@@ -12,6 +16,8 @@ store.dispatch({
 })
 
 console.log(store.getState());
+
+unsubscribe();
 
 store.dispatch({
     type: "bugRemoved",
