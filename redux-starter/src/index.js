@@ -1,13 +1,10 @@
-import { bugAdded, bugResolved } from "./actions"
-import store from "./store"
+import customStore from "./customStore";
+import * as actions from "./actions"
 
-console.log(store.getState());
+customStore.state = []
+console.log(customStore);
 
-store.dispatch(bugAdded())
+customStore.subscribe(() => console.log("Store Changed", customStore.getState()))
 
-console.log(store.getState());
-
-// store.dispatch(bugRemoved(1))
-store.dispatch(bugResolved(1));
-
-console.log(store.getState());
+customStore.dispatch(actions.bugAdded("Bugg1"))
+console.log(customStore.getState());
