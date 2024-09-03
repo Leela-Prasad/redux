@@ -1,7 +1,7 @@
-import configureStore from "./store/configureStore";
+import configureAppStore from "./store/configureStore";
 import * as actions from "./store/bugs"
 
-const store = configureStore()
+const store = configureAppStore()
 
 store.state = []
 console.log(store);
