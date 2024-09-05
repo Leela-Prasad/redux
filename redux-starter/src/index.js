@@ -4,7 +4,7 @@ import * as actions from "./store/bugs"
 const store = configureAppStore()
 
 store.state = []
-console.log(store);
+// console.log(store);
 
 store.subscribe(() => console.log("Store Changed", store.getState()))
 
