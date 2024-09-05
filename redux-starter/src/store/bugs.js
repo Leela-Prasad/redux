@@ -16,42 +16,23 @@ export default createReducer([], {
     //key: value
     //action: functions similar to event => event handler
 
-    "bugAdded": (state, action) => {
+    [bugAdded.type] : (bugs, action) => {
         //Here we are mutating just like a javascript way
         //but behind the scenes it uses Immer to create an Immutable object
-        state.push({
+        bugs.push({
             id: ++lastId,
             description: action.payload.description,
             resolved: false
         })
     },
 
-    "bugRemoved": (state, action) => {
-        state.filter(bug => bug.payload.id !== action.payload.id)
+    [bugRemoved.type]: (bugs, action) => {
+        const index = bugs.findIndex(bug => bug.id === action.payload.id)
+        bugs.splice(index, 1)
     },
 
-    "bugResolved": (state, action) => {
-        const index = state.findIndex(bug => bug.id === action.payload.id)
-        state[index].resolved = true
+    [bugResolved.type]: (bugs, action) => {
+        const index = bugs.findIndex(bug => bug.id === action.payload.id)
+        bugs[index].resolved = true
     }
 })
-
-// export default function reducer(state = [], dispatch) {
-
-//     if(dispatch.type === bugAdded.type) {
-//         return [
-//             ...state,
-//             {
-//                 id: ++lastId,
-//                 description: dispatch.payload.description,
-//                 resolved: false
-//             }
-//         ]
-//     } else if(dispatch.type === bugRemoved.type) {
-//         return state.filter(bug => bug.id !== dispatch.payload.id)
-//     } else if(dispatch.type === bugResolved.type) {
-//         return state.map(bug => bug.id === dispatch.payload.id? {...bug, resolved: true}: bug)
-//     }
-
-//     return state;
-// }
