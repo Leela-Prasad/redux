@@ -1,5 +1,6 @@
 import configureAppStore from "./store/configureStore";
-import * as actions from "./store/projects"
+import { projectAdded } from "./store/projects";
+import * as actions from "./store/bugs"
 
 const store = configureAppStore()
 
@@ -8,11 +9,10 @@ store.state = []
 
 store.subscribe(() => console.log("Store Changed", store.getState()))
 
-// store.dispatch(actions.bugAdded({description: "Bug1"}))
-// store.dispatch(actions.bugAdded({description: "Bug2"}))
-// store.dispatch(actions.bugAdded({description: "Bug3"}))
-// store.dispatch(actions.bugRemoved({id: 3}))
-// store.dispatch(actions.bugResolved({id: 1}))
-// console.log(store.getState());
+store.dispatch(actions.bugAdded({description: "Bug1"}))
+store.dispatch(actions.bugAdded({description: "Bug2"}))
+store.dispatch(actions.bugAdded({description: "Bug3"}))
+store.dispatch(actions.bugRemoved({id: 3}))
+store.dispatch(actions.bugResolved({id: 1}))
 
-store.dispatch(actions.projectAdded({name: "Project 1"}))
+store.dispatch(projectAdded({name: "Project 1"}))
