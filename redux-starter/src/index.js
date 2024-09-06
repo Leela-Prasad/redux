@@ -17,6 +17,7 @@ store.dispatch(bugResolved({id: 1}))
 
 store.dispatch(projectAdded({name: "Project 1"}))
 
-const unresolvedBugs = getUnresolvedBugs(store.getState())
-// store.getState().entities.bugs.filter(bug => !bug.resolved)
-console.log(unresolvedBugs);
+const x = getUnresolvedBugs(store.getState())
+const y = getUnresolvedBugs(store.getState())
+
+console.log(x === y);
