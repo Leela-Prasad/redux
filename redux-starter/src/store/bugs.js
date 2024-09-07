@@ -1,40 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
+import { apiCallBegan } from "./api";
 
 let lastId = 0;
 
 const slice = createSlice({
     name: "bugs",
-    initialState: [],
+    initialState: {
+        list: [],
+        loading: false,
+        lastFetch: null
+    },
     reducers: {
         //actions => action handlers
         bugAdded: (bugs, action) => {
-            bugs.push({
+            bugs.list.push({
                 id: ++lastId,
                 description: action.payload.description,
                 resolved: false
             })
         },
         bugRemoved: (bugs, action) => {
-            const index = bugs.findIndex(bug => bug.id === action.payload.id)
-            bugs.splice(index, 1)
+            const index = bugs.list.findIndex(bug => bug.id === action.payload.id)
+            bugs.list.splice(index, 1)
         },
         bugResolved: (bugs, action) => {
-            const index = bugs.findIndex(bug => bug.id === action.payload.id)
-            bugs[index].resolved = true
+            const index = bugs.list.findIndex(bug => bug.id === action.payload.id)
+            bugs.list[index].resolved = true
         },
         bugAssignedToUser: (bugs, action) => {
             const {bugId, userId} = action.payload;
-            const index = bugs.findIndex(bug => bug.id === bugId)
-            bugs[index].userId = userId
+            const index = bugs.list.findIndex(bug => bug.id === bugId)
+            bugs.list[index].userId = userId
+        },
+        bugsReceived: (bugs, action) => {
+            bugs.list = action.payload
+            bugs.loading = false
         }
     }
 })
 
 // console.log(slice);
 
-export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser} = slice.actions
+export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsReceived} = slice.actions
 export default slice.reducer
+
+//Action Creator
+export const loadBugs = () => apiCallBegan({
+    url: "/bugs",
+    onSuccess: bugsReceived.type
+})
 
 
 //Selectors
