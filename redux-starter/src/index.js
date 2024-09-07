@@ -6,3 +6,4 @@ store.state = []
 
 store.dispatch(loadBugs())
 
+setTimeout(() =>store.dispatch(loadBugs()), 2000)

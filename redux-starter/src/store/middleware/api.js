@@ -13,7 +13,7 @@ const api = ({dispatch, getState}) => next => async action => {
 
     try {
         const response = await axios.request({
-            baseURL: "http://localhost:9001/apix",
+            baseURL: "http://localhost:9001/api",
             url,
             method,
             data
