@@ -1,9 +1,7 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
 import moment from "moment";
-
-let lastId = 0;
 
 const slice = createSlice({
     name: "bugs",
@@ -46,7 +44,7 @@ const slice = createSlice({
 
 // console.log(slice);
 
-export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsRequested, bugsReceived, bugsRequestFailed} = slice.actions
+const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsRequested, bugsReceived, bugsRequestFailed} = slice.actions
 export default slice.reducer
 
 //Action Creator
