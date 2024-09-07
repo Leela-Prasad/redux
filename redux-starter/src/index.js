@@ -10,10 +10,19 @@ store.state = []
 //     dispatch({type: "bugsReceived", bugs: [1, 2, 3]})
 // })
 
+// store.dispatch({
+//     type: "error",
+//     payload: {
+//         message: "An error occurred"
+//     }
+// })
+
 store.dispatch({
-    type: "error",
+    type: "apiCallBegan",
     payload: {
-        message: "An error occurred"
+        url: "/bugs",
+        onSuccess: "bugsReceived",
+        onError: "apiRequestFailed"
     }
 })
 
