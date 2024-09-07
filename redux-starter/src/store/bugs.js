@@ -15,11 +15,7 @@ const slice = createSlice({
     reducers: {
         //actions => action handlers
         bugAdded: (bugs, action) => {
-            bugs.list.push({
-                id: ++lastId,
-                description: action.payload.description,
-                resolved: false
-            })
+            bugs.list.push(action.payload)
         },
         bugRemoved: (bugs, action) => {
             const index = bugs.list.findIndex(bug => bug.id === action.payload.id)
@@ -54,6 +50,7 @@ export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsRequeste
 export default slice.reducer
 
 //Action Creator
+const url = "/bugs"
 export const loadBugs = () => (dispatch, getState) => {
     const lastFetch = getState().entities.bugs.lastFetch 
     
@@ -63,7 +60,7 @@ export const loadBugs = () => (dispatch, getState) => {
     
     dispatch(
         apiCallBegan({
-            url: "/bugs",
+            url,
             onStart: bugsRequested.type,
             onSuccess: bugsReceived.type,
             onError: bugsRequestFailed.type
@@ -71,7 +68,12 @@ export const loadBugs = () => (dispatch, getState) => {
     )
 }
 
-
+export const addBug = bug => apiCallBegan({
+    url,
+    method: "post",
+    data: bug,
+    onSuccess: bugAdded.type
+})
 //Selectors
 // export const getUnresolvedBugs = state => state.entities.bugs.filter(bug => !bug.resolved)
 
