@@ -1,3 +1,4 @@
+import * as actions from "./store/api";
 import configureAppStore from "./store/configureStore";
 
 const store = configureAppStore()
@@ -17,12 +18,10 @@ store.state = []
 //     }
 // })
 
-store.dispatch({
-    type: "apiCallBegan",
-    payload: {
+store.dispatch(
+    actions.apiCallBegan({
         url: "/bugs",
-        onSuccess: "bugsReceived",
-        onError: "apiRequestFailed"
-    }
-})
+        onSuccess: "bugsReceived"
+    })
+)
 
