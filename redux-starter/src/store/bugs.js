@@ -33,8 +33,14 @@ const slice = createSlice({
             const index = bugs.list.findIndex(bug => bug.id === bugId)
             bugs.list[index].userId = userId
         },
+        bugsRequested: (bugs, action) => {
+            bugs.loading = true
+        },
         bugsReceived: (bugs, action) => {
             bugs.list = action.payload
+            bugs.loading = false
+        },
+        bugsRequestFailed: (bugs, action) => {
             bugs.loading = false
         }
     }
@@ -42,13 +48,15 @@ const slice = createSlice({
 
 // console.log(slice);
 
-export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsReceived} = slice.actions
+export const {bugAdded, bugRemoved, bugResolved, bugAssignedToUser, bugsRequested, bugsReceived, bugsRequestFailed} = slice.actions
 export default slice.reducer
 
 //Action Creator
 export const loadBugs = () => apiCallBegan({
     url: "/bugs",
-    onSuccess: bugsReceived.type
+    onStart: bugsRequested.type,
+    onSuccess: bugsReceived.type,
+    onError: bugsRequestFailed.type
 })
 
 
