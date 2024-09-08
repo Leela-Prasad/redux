@@ -1,0 +1,6 @@
+To run this project set below environment variable
+
+NODE_OPTIONS --openssl-legacy-provider
+
+Name: NODE_OPTIONS
+Value: --openssl-legacy-provider
